@@ -1,0 +1,23 @@
+@url=http://localhost:3000/api
+@json=Content-Type: application/json
+
+### 
+get {{url}} 
+
+### 注册
+post {{url}}/register
+{{json}}
+
+{
+  "username": "yaogengzhu",
+  "password": "123456"
+}
+
+
+### 登录
+post {{url}}/login
+
+
+### 个人信息
+get {{url}}/profile
+Authorization: Bearer token
