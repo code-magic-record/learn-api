@@ -12,3 +12,13 @@ post {{url}}/register
   "userName": "yaogengzhu",
   "passWord": "123456"
 }
+
+
+### 用户登录
+post {{url}}/login
+{{json}}
+
+{
+  "userName": "yaogengzhu",
+  "passWord": "123456"
+}
