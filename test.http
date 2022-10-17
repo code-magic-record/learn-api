@@ -2,22 +2,13 @@
 @json=Content-Type: application/json
 
 ### 
-get {{url}} 
+get {{url}}/user
 
-### 注册
+### 用户注册
 post {{url}}/register
 {{json}}
 
 {
-  "username": "yaogengzhu",
-  "password": "123456"
+  "userName": "yaogengzhu",
+  "passWord": "123456"
 }
-
-
-### 登录
-post {{url}}/login
-
-
-### 个人信息
-get {{url}}/profile
-Authorization: Bearer token
