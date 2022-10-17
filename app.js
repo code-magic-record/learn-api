@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 app.use(express.json());
 app.get('/api', (req, res) => {
+    console.log(req.route)
     res.send({
         data: 'ok',
     });
@@ -29,6 +30,10 @@ app.get('/api/profile', async(req, res) => {
     // })
 
     res.send("ok")
+})
+
+app.get('/api/baidu', (req, res) => {
+    res.redirect('https:www.baidu.com')
 })
 
 app.listen('3000', () => {
