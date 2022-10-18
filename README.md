@@ -113,3 +113,42 @@ app.post('/api/login', (req, res) => {
     });
 });
 ```
+
+### 获取个人信息
+- 如何使用token
+
+```js
+// 解析token
+const raw = String(req.headers.authorization).split(' ').pop();
+const tokenData = jwt.verify(raw, tokenSalt);
+const { id } = tokenData;
+```
+
+
+简单实现
+```js
+// 获取用户信息
+router.get('/profile', async (req, res) => {
+    // console.log(req.headers.authorization)
+    const raw = String(req.headers.authorization).split(' ').pop();
+    const tokenData = jwt.verify(raw, tokenSalt);
+    const { id } = tokenData;
+    const sql = `select * from user where id = ${id}`
+    connection.query(sql, (err, data) => {
+      if (err) {
+        res.send({
+          code: 0,
+          msg: '系统错误'
+        })        
+        return
+      }
+
+      res.send({
+        code: 1,
+        msg: '获取用户信息成功',
+        userInfo: data[0]
+      })
+    })
+
+});
+```

@@ -20,7 +20,7 @@ router.post('/register', (req, res) => {
         connection.query(sql, (err, data) => {
             if (!err) {
                 res.send({
-                    code: 0,
+                    code: 1,
                     msg: '注册成功',
                 });
                 return;
@@ -45,11 +45,11 @@ router.post('/login', (req, res) => {
                 const passWordHash = data[0].pass_word;
                 const id = data[0].id;
                 bcrypt.compare(passWord, passWordHash, (err, isTrue) => {
-                    const token = jwt.sign(id, tokenSalt);
+                    const token = jwt.sign({ id }, tokenSalt);
                     console.log(token, 'token');
                     if (isTrue) {
                         res.send({
-                            code: '0',
+                            code: 1,
                             msg: '登录成功',
                             data: data[0],
                             token,
@@ -70,6 +70,32 @@ router.post('/login', (req, res) => {
             }
         }
     });
+});
+
+// 获取用户信息
+router.get('/profile', async (req, res) => {
+    // console.log(req.headers.authorization)
+    const raw = String(req.headers.authorization).split(' ').pop();
+    console.log(raw, 'raw');
+    const tokenData = jwt.verify(raw, tokenSalt);
+    const { id } = tokenData;
+    const sql = `select * from user where id = ${id}`
+    connection.query(sql, (err, data) => {
+      if (err) {
+        res.send({
+          code: 0,
+          msg: '系统错误'
+        })        
+        return
+      }
+
+      res.send({
+        code: 1,
+        msg: '获取用户信息成功',
+        userInfo: data[0]
+      })
+    })
+
 });
 
 module.exports = router;

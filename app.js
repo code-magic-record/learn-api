@@ -9,7 +9,6 @@ router.use(function timeLog(req, res, next) {
     next();
 });
 app.use('/api/user', user);
-
 app.listen('3000', () => {
     console.log(' serve is running at http:localhost:3000');
 });

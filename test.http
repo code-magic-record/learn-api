@@ -1,4 +1,4 @@
-@url=http://localhost:3000/api
+@url=http://localhost:3000/api/user/
 @json=Content-Type: application/json
 
 ### 
@@ -22,3 +22,7 @@ post {{url}}/login
   "userName": "yaogengzhu",
   "passWord": "123456"
 }
+
+### 用户信息
+get {{url}}/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.MQ.4oN4QBQrzZSWBOHR3A3HNI9HUu-zsbqtjSP0ekngtx0
