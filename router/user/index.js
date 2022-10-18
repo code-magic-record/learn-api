@@ -5,6 +5,7 @@ const router = express.Router();
 const saltRounds = 10;
 const tokenSalt = 'token_secret';
 const { connection } = require('../../db/mysql');
+const auth = require('../../middleware/auth');
 
 router.post('/register', (req, res) => {
     const { userName, passWord } = req.body;
@@ -73,29 +74,9 @@ router.post('/login', (req, res) => {
 });
 
 // 获取用户信息
-router.get('/profile', async (req, res) => {
-    // console.log(req.headers.authorization)
-    const raw = String(req.headers.authorization).split(' ').pop();
-    console.log(raw, 'raw');
-    const tokenData = jwt.verify(raw, tokenSalt);
-    const { id } = tokenData;
-    const sql = `select * from user where id = ${id}`
-    connection.query(sql, (err, data) => {
-      if (err) {
-        res.send({
-          code: 0,
-          msg: '系统错误'
-        })        
-        return
-      }
-
-      res.send({
-        code: 1,
-        msg: '获取用户信息成功',
-        userInfo: data[0]
-      })
-    })
-
+router.get('/profile', auth, async (req, res) => {
+    console.log(req.body, 'req.body');
+    res.send(req.body);
 });
 
 module.exports = router;

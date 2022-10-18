@@ -171,3 +171,47 @@ router.get('/profile', async (req, res) => {
 
 });
 ```
+
+### 如何使用中间件鉴权
+
+写一个中间件
+
+```js
+const tokenSalt = 'token_secret';
+const jwt = require('jsonwebtoken');
+const { connection } = require('../db/mysql');
+const auth = (req, res, next) => {
+    const raw = String(req.headers.authorization).split(' ').pop();
+    try {
+        const tokenData = jwt.verify(raw, tokenSalt);
+    } catch (e) {
+        res.send({
+            code: 0,
+            msg: '无效token',
+        });
+    }
+    const { id } = tokenData;
+    const sql = `select * from user where id = ${id}`;
+    connection.query(sql, (err, data) => {
+        if (err) {
+            res.send({
+                code: 0,
+                msg: '系统错误',
+            });
+            return;
+        }
+        req.body = data[0];
+        next();
+    });
+};
+module.exports = auth;
+```
+
+使用中间件
+```js
+// 获取用户信息
+router.get('/profile', auth, async (req, res) => {
+    console.log(req.body, 'req.body');
+    res.send(req.body);
+});
+```
