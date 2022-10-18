@@ -4,8 +4,9 @@ const { connection } = require('../db/mysql');
 
 const auth = (req, res, next) => {
     const raw = String(req.headers.authorization).split(' ').pop();
+    let tokenData = {};
     try {
-        const tokenData = jwt.verify(raw, tokenSalt);
+        tokenData = jwt.verify(raw, tokenSalt);
     } catch (e) {
         res.send({
             code: 0,
