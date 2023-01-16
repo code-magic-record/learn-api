@@ -26,3 +26,8 @@ post {{url}}/login
 ### 用户信息
 get {{url}}/profile
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.MQ.4oN4QBQrzZSWBOHR3A3HNI9HUu-zsbqtjSP0ekngtx0
+
+
+### 获取用户列表
+get {{url}}/user/list
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjczODY5MjIyfQ.kbKQM3asjz5kWXtBPpCBCwE4tBjIk8wNMqTX07PVgk4

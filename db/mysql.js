@@ -1,6 +1,5 @@
 const dotenv = require("dotenv");
 const mysql = require("mysql2");
-const { data } = require("../mock/user");
 dotenv.config();
 const {
   DATABASE_MY_HOST,
@@ -20,24 +19,6 @@ const connection = mysql.createConnection({
 });
 
 console.log("Creted a connection to mysql");
-
-function insertUser() {
-  console.log(data);
-  data.list.forEach((item) => {
-    const sql = `
-      insert into user(user_name, pass_word) values('${item.name}', '${item.password}')
-    `;
-    connection.query(sql, (err, data) => {
-      console.log(err, data);
-    });
-  });
-}
-
 module.exports = {
   connection,
 };
-// insertUser()
-
-// connection.query("select * from user", function(err, res) {
-//   console.log(res)
-// })
