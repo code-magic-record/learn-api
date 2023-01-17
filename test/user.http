@@ -25,9 +25,20 @@ post {{url}}/login
 
 ### 用户信息
 get {{url}}/profile
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.MQ.4oN4QBQrzZSWBOHR3A3HNI9HUu-zsbqtjSP0ekngtx0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjczODY5MjIyfQ.kbKQM3asjz5kWXtBPpCBCwE4tBjIk8wNMqTX07PVgk4
 
+
+### 更改用户信息
+post {{url}}/updateUser
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjczODY5MjIyfQ.kbKQM3asjz5kWXtBPpCBCwE4tBjIk8wNMqTX07PVgk4
+{{json}}
+
+{
+  "userName": "test",
+  "id": 2,
+  "phone": "15871602731"
+}
 
 ### 获取用户列表
-get {{url}}/user/list
+get {{url}}/list
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjczODY5MjIyfQ.kbKQM3asjz5kWXtBPpCBCwE4tBjIk8wNMqTX07PVgk4

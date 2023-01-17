@@ -86,10 +86,47 @@ router.post("/login", (req, res) => {
 
 // 获取用户信息
 router.get("/profile", auth, async (req, res) => {
-  res.send(req.body);
+  const { id, user_name } = req.user;
+  res.send({
+    code: 1,
+    msg: '获取用户信息成功',
+    data: {
+      id,
+      userName: user_name
+    }
+  });
 });
 
-router.get("/user/list", auth, async (req, res) => {
+router.post("/updateUser", auth, async (req, res) => {
+  const { userName, id, email, phone } = req.body;
+  let sql = 'update user set '
+  if (userName) {
+    sql += `user_name='${userName}'`;
+  }
+  if (email) {
+    sql += `, email='${email}'`;
+  }
+  if (phone) {
+    sql += `, phone='${phone}'`;
+  }
+  sql += ` where id=${id}`;
+  connection.query(sql, (err, data) => {
+    if (err) {
+      res.send({
+        code: 0,
+        msg: "修改失败",
+        e: err
+      });
+      return;
+    }
+    res.send({
+      code: 1,
+      msg: "修改成功",
+    })
+  })
+})
+
+router.get("/list", auth, async (req, res) => {
     const sql = `select * from user`; 
     connection.query(sql, (err, data) => {
         if(!err) {

@@ -23,7 +23,7 @@ const auth = (req, res, next) => {
             });
             return;
         }
-        req.body = data[0];
+        req.user = data[0];
         next();
     });
 };
