@@ -29,7 +29,7 @@ router.post("/register", (req, res) => {
       }
       // const sql = `insert into user(user_name, pass_word) values('${userName}', '${hash}')`;
       const sql = `insert into user set ?`;
-      connection.query(sql, { user_name: userName, passWord: pas}, (err, data) => {
+      connection.query(sql, { user_name: userName, pass_word: passWord}, (err, data) => {
         if (!err) {
           res.send({
             code: 1,
@@ -97,6 +97,7 @@ router.get("/profile", auth, async (req, res) => {
   });
 });
 
+// 修改用户信息
 router.post("/updateUser", auth, async (req, res) => {
   const { userName, id, email, phone } = req.body;
   const sql = "update user set user_name=?, email=?, phone=? where id=?";
@@ -116,6 +117,43 @@ router.post("/updateUser", auth, async (req, res) => {
   });
 });
 
+// 删除用户
+router.post("/deleteUser", auth, async (req, res, user) => {
+  const { id } = req.body;
+  const { is_super, id: userId} = req.user;
+  if (id === userId) {
+    res.send({
+      code: 0,
+      msg: '无法删除自己'
+    })
+  }
+  if (is_super) {
+    res.send({
+      code: 0,
+      msg: '您没有权限删除用户'
+    })
+    return
+  }
+
+  const sql = "delete from user where id=?";
+  // 需要判断当前登录的用是否是超级管理员
+  connection.query(sql, [id], (err, data) => {
+    if(err) {
+      res.send({
+        code: 0,
+        msg: '删除失败'
+      })
+      return
+    }
+    console.log(err, data);
+    res.send({
+      code: 1,
+      msg: '删除成功'
+    })
+  });
+});
+
+// 获取用户列表
 router.get("/list", auth, async (req, res) => {
   const sql = `select * from user`;
   connection.query(sql, (err, data) => {

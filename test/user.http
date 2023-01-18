@@ -9,7 +9,7 @@ post {{url}}/register
 {{json}}
 
 {
-  "userName": "yaogengzhuxx",
+  "userName": "yaogengzhu123",
   "passWord": "123456"
 }
 
@@ -34,10 +34,19 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxN
 {{json}}
 
 {
-  "userName": "tes11t",
-  "id": 2,
+  "userName": "yaogengzhu",
+  "id": 1,
   "phone": "15871602731",
   "email": "ttttttt@qq.com"
+}
+
+### 删除用户
+post {{url}}/deleteUser
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjczODY5MjIyfQ.kbKQM3asjz5kWXtBPpCBCwE4tBjIk8wNMqTX07PVgk4
+{{json}}
+
+{
+  "id": 5
 }
 
 ### 获取用户列表
