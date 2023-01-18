@@ -10,14 +10,14 @@ const auth = require("../../middleware/auth");
 router.post("/register", (req, res) => {
   const { userName, passWord } = req.body;
   // 先查询用户是否存在，不存在则注册，否则提示用户已存在
-  const sqlUser = `select * from user where user_name='${userName}'`;
-  connection.query(sqlUser, (err, data) => {
+  const sqlUser = `select * from user where user_name= ?`;
+  connection.query(sqlUser, [userName], (err, data) => {
     if (data.length !== 0) {
-        res.send({
-            code: 0,
-            msg: "用户已存在",
-        })
-        return
+      res.send({
+        code: 0,
+        msg: "用户已存在",
+      });
+      return;
     }
     bcrypt.hash(passWord, saltRounds, function (err, hash) {
       if (err) {
@@ -27,8 +27,9 @@ router.post("/register", (req, res) => {
           msg: "服务器错误",
         });
       }
-      const sql = `insert into user(user_name, pass_word) values('${userName}', '${hash}')`;
-      connection.query(sql, (err, data) => {
+      // const sql = `insert into user(user_name, pass_word) values('${userName}', '${hash}')`;
+      const sql = `insert into user set ?`;
+      connection.query(sql, { user_name: userName, passWord: pas}, (err, data) => {
         if (!err) {
           res.send({
             code: 1,
@@ -50,8 +51,8 @@ router.post("/register", (req, res) => {
 router.post("/login", (req, res) => {
   const { userName, passWord } = req.body;
   // 验证密码是否正确
-  const sql = `select * from user where user_name='${userName}'`;
-  connection.query(sql, (err, data) => {
+  const sql = `select * from user where user_name= ?`;
+  connection.query(sql, [userName], (err, data) => {
     if (!err) {
       if (data.length > 0) {
         const passWordHash = data[0].pass_word;
@@ -63,7 +64,6 @@ router.post("/login", (req, res) => {
             res.send({
               code: 1,
               msg: "登录成功",
-              data: data[0],
               token,
             });
             return;
@@ -89,62 +89,54 @@ router.get("/profile", auth, async (req, res) => {
   const { id, user_name } = req.user;
   res.send({
     code: 1,
-    msg: '获取用户信息成功',
+    msg: "获取用户信息成功",
     data: {
       id,
-      userName: user_name
-    }
+      userName: user_name,
+    },
   });
 });
 
 router.post("/updateUser", auth, async (req, res) => {
   const { userName, id, email, phone } = req.body;
-  let sql = 'update user set '
-  if (userName) {
-    sql += `user_name='${userName}'`;
-  }
-  if (email) {
-    sql += `, email='${email}'`;
-  }
-  if (phone) {
-    sql += `, phone='${phone}'`;
-  }
-  sql += ` where id=${id}`;
-  connection.query(sql, (err, data) => {
+  const sql = "update user set user_name=?, email=?, phone=? where id=?";
+  connection.query(sql, [userName, email, phone, id], (err, data) => {
     if (err) {
       res.send({
         code: 0,
         msg: "修改失败",
-        e: err
+        e: err,
       });
       return;
     }
     res.send({
       code: 1,
       msg: "修改成功",
-    })
-  })
-})
+    });
+  });
+});
 
 router.get("/list", auth, async (req, res) => {
-    const sql = `select * from user`; 
-    connection.query(sql, (err, data) => {
-        if(!err) {
-            res.send({
-                code: 1,
-                msg: "获取用户列表成功",
-                data: data.map(item => ({
-                    userName: item.user_name,
-                    id: item.id
-                }))
-            })
-            return
-        }
-        res.send({
-            code: 0,
-            msg: "获取用户列表失败",
-        })
-    })
+  const sql = `select * from user`;
+  connection.query(sql, (err, data) => {
+    if (!err) {
+      res.send({
+        code: 1,
+        msg: "获取用户列表成功",
+        data: data.map((item) => ({
+          userName: item.user_name,
+          id: item.id,
+          phone: item.phone,
+          email: item.email,
+        })),
+      });
+      return;
+    }
+    res.send({
+      code: 0,
+      msg: "获取用户列表失败",
+    });
+  });
 });
 
 module.exports = router;

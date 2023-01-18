@@ -9,7 +9,7 @@ post {{url}}/register
 {{json}}
 
 {
-  "userName": "yaogengzhu",
+  "userName": "yaogengzhuxx",
   "passWord": "123456"
 }
 
@@ -34,9 +34,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxN
 {{json}}
 
 {
-  "userName": "test",
+  "userName": "tes11t",
   "id": 2,
-  "phone": "15871602731"
+  "phone": "15871602731",
+  "email": "ttttttt@qq.com"
 }
 
 ### 获取用户列表
