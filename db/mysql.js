@@ -19,6 +19,21 @@ const connection = mysql.createConnection({
 });
 
 console.log("Creted a connection to mysql");
+
+function handleError(err) {
+  if (err) {
+    // 如果是连接断开，自动重新连接
+    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+      connection.connect();
+    } else {
+      console.error(err.stack || err);
+    }
+  }
+}
+connection.connect(handleError)
+connection.on('error', handleError);
+
+
 module.exports = {
   connection,
 };
