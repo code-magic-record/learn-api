@@ -12,6 +12,7 @@
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
     "cos-nodejs-sdk-v5": "^2.11.19",
+    "dayjs": "^1.11.7",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "jsonwebtoken": "^8.5.1",

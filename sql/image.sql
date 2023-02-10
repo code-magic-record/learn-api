@@ -7,3 +7,6 @@ create table image(
 	create_time date comment '创建时间'
 ) comment 'img 表'
 
+
+alter table image modify img_name varchar(30) not null;
+alter table image add catetory_id int not null;
