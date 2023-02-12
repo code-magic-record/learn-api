@@ -121,14 +121,7 @@ router.post('/add_image', async (req, res) => {
     const sql = `insert into image(img_size, img_name, img_type, img_key, catetory_id, create_time) values ?`;
     // 参数校验--- TODO
     const valuesList = image_list.map((item) => {
-        return [
-            item.size,
-            item.name,
-            item.extname,
-            item.key,
-            catetory_id,
-            now,
-        ];
+        return [item.size, item.name, item.extname, item.key, catetory_id, now];
     });
     connection.query(sql, [valuesList], (err, data) => {
         if (!err) {
@@ -151,19 +144,24 @@ router.post('/add_image', async (req, res) => {
     //     code: 200,
     //     msg: '添加成功',
     // })
-
 });
 
 /**
  * 获取图片列表
  */
 router.get('/get_image_list', (req, res) => {
-    const { category_id } = req.query;
-    const sql = `select * from image where catetory_id = ${category_id}`;
+    // 支持基础分页查询
+    const { pageNo, pageSize } = req.query;
+    const count = 0;
+    let page = 1 || pageNo;
+    let size = 20 || pageSize;
+    // 分页查询
+    const sql = `select * from image limit ${(page - 1) * size}, ${size}`;
     connection.query(sql, (err, data) => {
         if (!err) {
             return res.send({
                 code: 200,
+                hasMore: data.length <= size,
                 data,
             });
         }
