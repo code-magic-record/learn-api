@@ -153,8 +153,8 @@ router.get('/get_image_list', (req, res) => {
     // 支持基础分页查询
     const { pageNo, pageSize } = req.query;
     const count = 0;
-    let page = 1 || pageNo;
-    let size = 20 || pageSize;
+    let page = pageNo || 1 ;
+    let size = pageSize || 20;
     // 分页查询
     const sql = `select * from image limit ${(page - 1) * size}, ${size}`;
     connection.query(sql, (err, data) => {
