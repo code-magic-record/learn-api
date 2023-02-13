@@ -16,9 +16,10 @@ const connection = mysql.createConnection({
   database: DATABASE_NAME,
   user: DATABASE_MY_USERNAME,
   password: DATABASE_MY_PASSWORD,
+  waitForConnections: true,
+  connectionLimit: 20,
+  queueLimit: 0
 });
-
-console.log("Creted a connection to mysql");
 
 function handleError(err) {
   if (err) {
