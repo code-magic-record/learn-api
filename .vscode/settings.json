@@ -1,0 +1,15 @@
+{
+    "git.ignoreMissingGitWarning": true,
+    "eslint.options": {
+        "extensions": [
+            ".js"
+        ]
+    },
+    "emmet.syntaxProfiles": {
+        "javascript": "js"
+    },
+    "editor.fontSize": 12,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    }
+}
