@@ -145,12 +145,15 @@ router.post('/add_image', async (req, res) => {
  */
 router.get('/get_image_list', (req, res) => {
   // 支持基础分页查询
-  const { pageNo, pageSize } = req.query
+  const { pageNo, pageSize, category_id } = req.query
   logger.info('/get_image_list, 参数', req.query)
   const page = pageNo || 1
   const size = pageSize || 20
   // 分页查询
-  const sql = `select * from image limit ${(page - 1) * size}, ${size}`
+  let sql = `select * from image limit ${(page - 1) * size}, ${size}`
+  if (category_id) {
+    sql = `select * from image where catetory_id = ${category_id} limit ${(page - 1) * size}, ${size}`
+  }
   connection.query(sql, (err, data) => {
     if (!err) {
       logger.info('/get_image_list, 结果', 200)
