@@ -41,7 +41,7 @@ setInterval(() => {
   connection.query(sql, (_err, db) => {
     logger.info('数据库连接测试，防止断开')
   })
-}, 1000 * 60 * 60)
+}, 1000 * 60 * 30)
 
 module.exports = {
   connection
