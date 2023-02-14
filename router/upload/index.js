@@ -159,7 +159,7 @@ router.get('/get_image_list', (req, res) => {
       logger.info('/get_image_list, 结果', 200)
       return res.send({
         code: 200,
-        hasMore: data.length <= size,
+        hasMore: data.length === size,
         data
       })
     }
