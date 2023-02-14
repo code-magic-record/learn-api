@@ -36,6 +36,13 @@ function handleError (err) {
 connection.connect(handleError)
 connection.on('error', handleError)
 
+setInterval(() => {
+  const sql = 'select 1'
+  connection.query(sql, (_err, db) => {
+    logger.info('数据库连接测试，防止断开')
+  })
+}, 50000)
+
 module.exports = {
   connection
 }
