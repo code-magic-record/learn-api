@@ -154,7 +154,7 @@ router.get('/get_image_list', (req, res) => {
   // 分页查询
   let sql = `select * from image limit ${(page - 1) * size}, ${size}`
   if (category_id) {
-    sql = `select * from image where catetory_id = ${category_id} limit ${(page - 1) * size}, ${size}`
+    sql = `select * from image where category_id = ${category_id} limit ${(page - 1) * size}, ${size}`
   }
   connection.query(sql, (err, data) => {
     if (!err) {
