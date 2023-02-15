@@ -61,6 +61,7 @@ router.post('/create_category', (req, res) => {
  */
 router.get('/get_category_list', (req, res) => {
   const sql = 'select * from image_category'
+  logger.info('获取分类列表', 'get_category_list')
   connection.query(sql, (err, data) => {
     if (!err) {
       return res.send({
@@ -68,6 +69,7 @@ router.get('/get_category_list', (req, res) => {
         data
       })
     }
+    logger.err('获取分类列表', 'get_category_list', err)
     return res.send({
       code: err
     })
