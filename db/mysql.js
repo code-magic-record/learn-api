@@ -23,7 +23,7 @@ setInterval(() => {
     if (err) {
       return logger.error('心跳检查', err)
     }
-    logger.error(' ❤️❤️❤️❤️❤️❤️❤️心跳检查❤️❤️❤️❤️❤️❤️❤️')
+    logger.info(' ❤️❤️❤️❤️❤️❤️❤️心跳检查❤️❤️❤️❤️❤️❤️❤️')
   })
 }, 1000 * 60 * 5)
 
