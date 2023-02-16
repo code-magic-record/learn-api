@@ -20,7 +20,8 @@
     "mockjs": "^1.1.0",
     "multiparty": "^4.2.3",
     "mysql2": "^2.3.3",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "openai": "^3.1.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.0.0",
