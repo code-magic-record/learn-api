@@ -5,6 +5,7 @@ dotenv.config()
 
 const { OPENAI_API_KEY } = process.env
 const { Configuration, OpenAIApi } = require('openai')
+const logger = require('../../logger')
 
 const configuration = new Configuration({
   apiKey: OPENAI_API_KEY,
@@ -39,7 +40,13 @@ async function senMsg(msg) {
 
 router.post('/sendmsg', async (req, res) => {
   const { keyword } = req.body;
+  logger.info('/sendmsg 用户询问问题：', keyword)
   const { code, msg} = await senMsg(keyword)
+  if (code === 200) {
+    logger.info('/sendmsg openai 返回结果', msg)
+  } else {
+    logger.error('/sendmsg 异常', msg)
+  }
   res.send({
     code,
     msg,
